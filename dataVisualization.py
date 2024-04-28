@@ -80,20 +80,17 @@ plt.show()
 clinical_data = pd.read_excel('/content/drive/Shareddrives/ANNDL2024/Brain-TR-GammaKnife-Clinical-Information.xlsx')
 clinical_data = clinical_data.iloc[:,:6]
 
-# @title Gender vs Age at Diagnosis Plot
+# Gender vs Age at Diagnosis Plot
 
-from matplotlib import pyplot as plt
-import seaborn as sns
 figsize = (12, 1.2 * len(clinical_data['Gender'].unique()))
 plt.figure(figsize=figsize)
 sns.violinplot(clinical_data, x='Age at Diagnosis', y='Gender', inner='stick', palette='Dark2')
 sns.despine(top=True, right=True, bottom=True, left=True)
 
-# @title mri_type
+# Plot post augmentation data distribution
+ensemble_gamaknife_data = pd.read_csv('/content/drive/Shareddrives/ANNDL2024/PKG-Brain-TR-GammaKnife-processed/gamma_knife_data_rotated_cropped')
+ensemble_gamaknife_data.groupby('mri_type').size().plot(kind='barh', color=sns.palettes.mpl_palette('Dark2'))
+plt.gca().spines[['top', 'right',]].set_visible(False)
 
-lesion_data = pd.read_excel('/content/drive/Shareddrives/ANNDL2024/lesion_data.xlsx')
-
-from matplotlib import pyplot as plt
-import seaborn as sns
 lesion_data.groupby('mri_type').size().plot(kind='barh', color=sns.palettes.mpl_palette('Dark2'))
 plt.gca().spines[['top', 'right',]].set_visible(False)
