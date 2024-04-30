@@ -17,12 +17,10 @@ max_size = (82, 66, 39)
 
 # Pad Function
 def pad_image(image, target_size):
-    # Calculate the amount of padding needed on each side
+    # Calculate padding needed
     pad_height = max(0, target_size[0] - image.shape[0])
     pad_width = max(0, target_size[1] - image.shape[1])
     pad_depth = max(0, target_size[2] - image.shape[2])
-
-    # Calculate the padding for each side
     pad_top = pad_height // 2
     pad_bottom = pad_height - pad_top
     pad_left = pad_width // 2
@@ -30,7 +28,7 @@ def pad_image(image, target_size):
     pad_front = pad_depth // 2
     pad_back = pad_depth - pad_front
 
-    # Pad the image
+    # Pad image
     padded_image = np.pad(image, ((pad_top, pad_bottom), (pad_left, pad_right), (pad_front, pad_back)), mode='constant')
 
     return padded_image
@@ -41,7 +39,7 @@ def overlay(scan_file, les_mask):
   overlayed_image = scan_data * les_data
   return overlayed_image
 
-# Crop function
+# Crop function - from Wang et. al paper
 def crop_les(d):
     true_points = np.argwhere(d)
     top_left = true_points.min(axis=0)
@@ -51,7 +49,7 @@ def crop_les(d):
 
 ### Cropping the Lesion Masks for MRI
 
-# loop through keys
+# Loop through keys
 for mri_image in lesion_to_mri_mapping.keys():
   les_list = lesion_to_mri_mapping[mri_image]
 
